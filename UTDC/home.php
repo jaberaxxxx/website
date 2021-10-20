@@ -1,29 +1,37 @@
 <?php
+	require_once 'includes/header.php';
     require_once 'db/conn.php';
     $b=$crud->getUser();
     $f=0;
-    if(isset($_POST['submit'])){
+    $i=0;
+    if(isset($_POST['submit'])){//if submit was clicked
         $email=$_POST['email'];
         $password=$_POST['password'];
-        while($a = $b->fetch(PDO::FETCH_ASSOC)){//for some reasone it is  entering an infinite loop;
+        while($a = $b->fetch(PDO::FETCH_ASSOC)){
             if($a['email'] == $email && $a['password'] == $password){
-                //header("location:home.php");
                 $f++;
-                break;
+                break;//break with f>0
             }
             
             else{
-                //header("location:index.php");
                 $f=0;
             }
         }
-        if($f==0){
-            header("location:index.php");
+        if($f==0){//if wrong email or wrong password
+            ?>
+            <script type="text/javascript">
+                alert("Wrong Username or Password");
+                location="index.php";
+            </script>
+            <?php
 
         }
-
+        //else stay in home page
     }
-    else{
+    else{//if no submit --> /UTDC/home.php... it will redirect the user to index.php
         header("location:index.php");
     }
+
+
+	require_once 'includes/footer.php';
 ?>

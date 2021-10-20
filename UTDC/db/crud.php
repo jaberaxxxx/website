@@ -38,7 +38,7 @@
 
         }*/
 
-        public function getUser(){
+        public function getUser(){//get all users from database
             $sql = "SELECT * FROM `users`;";
             $result = $this->db->query($sql);
             return $result;
