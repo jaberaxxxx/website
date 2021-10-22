@@ -43,16 +43,16 @@
                 </div>
             </div>
             <div class="form-floating">
-                <input type="date" class="form-control" id="dob" name="dob" placeholder="Date of birth" required>
+                <input name="dob" type="text" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'" class="form-control" id="dob" name="dob" placeholder="Date of birth" required>
                 <label for="dob" class="text-muted" style="font-family:georgia;">Date of birth</label>
             </div>
             <div class="form-floating">
-                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
-                <label for="email" class="text-muted" style="font-family:georgia;">Email address</label>
+                <input type="email" class="form-control" id="emaill" name="emaill" placeholder="name@example.com" required>
+                <label for="emaill" class="text-muted" style="font-family:georgia;">Email address</label>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required >
-                <label for="password" class="text-muted" style="font-family:georgia ;">Password</label>
+                <input type="password" class="form-control" id="pass" name="pass" placeholder="Password" required >
+                <label for="pass" class="text-muted" style="font-family:georgia ;">Password</label>
             </div>
             <div class="form-floating">
                 <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" required onchange="val()">
@@ -61,7 +61,7 @@
             <p class="text-danger" id="error-signup-msg" style="margin:0"></p>
             <script>
                 function check(){
-                    if (document.getElementById('password').value ==
+                    if (document.getElementById('pass').value ==
                         document.getElementById('confirmpassword').value) {
                             return true;
                     } else {
@@ -71,7 +71,7 @@
                     }
                 }
             </script>
-                <button class="w-100 btn btn-lg btn-success mt-4 mb-2 signup-btn" style="font-family:georgia" name="submit" type="submit" >Sign up</button>
+                <button class="w-100 btn btn-lg btn-success mt-4 mb-2 signup-btn" style="font-family:georgia" name="submit-signup" type="submit" >Sign up</button>
         </form>
     </main>
 

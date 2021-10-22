@@ -20,6 +20,22 @@
 	</head>
 	<?php
 		require_once "db/conn.php";
+		if(isset($_POST['submit-signup'])){
+			$fname=$_POST['firstname'];
+			$lname=$_POST['lastname'];
+			$dob=$_POST['dob'];
+			$email=$_POST['emaill'];
+			$password=$_POST['pass'];
+			$issuccess=$crud->insert($fname,$lname,$dob,$email,$password);
+			if(!$issuccess){
+				?>
+				<script>
+					alert("There was an error");
+					location="signup.php";
+				</script>
+				<?php
+			}
+		}
 	?>
 	<body  class="text-center bg">
 		<main class="form-signin">

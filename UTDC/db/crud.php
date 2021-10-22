@@ -10,11 +10,11 @@
         }
 
         // function to insert a new record into the attendee database
-        /*public function insert($fname , $lname, $dob, $email, $contact, $speciality){
+        public function insert($fname , $lname, $dob, $email, $password){
             try {
 
                 // define sql statement to be executed
-                $sql = " INSERT INTO attendee (firstname,lastname,dateofbirth,email,contact,specialty_id) VALUES (:fname, :lname, :dob, :email, :contact, :speciality) "; // hude l parameters henne l placeholders 
+                $sql = " INSERT INTO users (firstname,lastname,dateofbirth,email,pass) VALUES (:fname, :lname, :dob, :email, :pass) "; // hude l parameters henne l placeholders 
                
                 // prepare the sql statement for execution
                 $stmt = $this->db->prepare($sql);
@@ -24,8 +24,7 @@
                 $stmt->bindparam(':lname', $lname);
                 $stmt->bindparam(':dob', $dob);
                 $stmt->bindparam(':email', $email);
-                $stmt->bindparam(':contact', $contact);
-                $stmt->bindparam(':speciality', $speciality);
+                $stmt->bindparam(':pass', $password);
 
                 // execute statement
                 $stmt->execute();
@@ -36,7 +35,7 @@
                 return false;   
             }
 
-        }*/
+        }
 
         public function getUser(){//get all users from database
             $sql = "SELECT * FROM `users`;";

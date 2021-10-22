@@ -18,7 +18,7 @@
                 $email=$_POST['email'];
                 $password=$_POST['password'];
                 while($a = $b->fetch(PDO::FETCH_ASSOC)){
-                    if($a['email'] == $email && $a['password'] == $password){
+                    if($a['email'] == $email && $a['pass'] == $password){
                         $f++;
                         break;//break with f>0
                     }
