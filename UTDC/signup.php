@@ -25,7 +25,7 @@
 <main class="form-signin">
 		
         <form action="index.php" method="post" onsubmit="return check()">
-            <h1 class="h3 mb-3 fw-normal" style="font-family:georgia; color:#575656">Create new account</h1>
+            <h1 class="h3 mb-3 fw-bold" style="font-family:georgia; color:#157347">Create new account</h1>
             
                 <div class="row">
                     <div class="col">
