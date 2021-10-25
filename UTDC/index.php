@@ -1,3 +1,8 @@
+<?php
+	session_start();
+	$_SESSION['email'] = NULL;
+    $_SESSION['password'] = NULL;
+?>
 <!doctype html>
 <html lang="en">
 	<head>
@@ -22,6 +27,10 @@
 		require_once "db/conn.php";
 		$issuccess = true;
 		$h=$crud->getUser();
+		if(isset($_POST['sign-out'])){
+			session_unset();
+            session_destroy();
+		}
 		if(isset($_POST['submit-signup'])){
 			$fname=$_POST['firstname'];
 			$lname=$_POST['lastname'];
