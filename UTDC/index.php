@@ -2,6 +2,9 @@
 	session_start();
 	$_SESSION['email'] = NULL;
     $_SESSION['password'] = NULL;
+	$_SESSION['firstname' ] = NULL;
+    $_SESSION['lastname'] = NULL;
+    $_SESSION['dateofbirth'] = NULL;
 ?>
 <!doctype html>
 <html lang="en">
@@ -67,7 +70,8 @@
 				else{
 					?>
 					<script>
-						alert("Sign up successful... Please login to continue");
+						alert("Sign up successful");
+						location="home.php";
 					</script>
 					<?php
 				}

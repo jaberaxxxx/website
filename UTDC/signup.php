@@ -24,7 +24,7 @@
     <body  class="text-center bg">
         <main class="form-signin">
             <form action="index.php" method="post" onsubmit="return check()">
-                <h1 class="h3 mb-3 fw-bold" style="font-family:georgia; color:#157347">Create new account</h1>
+                <h1 class="h3 mb-3 mt-9 fw-bold" style="font-family:georgia; color:#157347">Create new account</h1>
                     <div class="row">
                         <div class="col">
                             <div class="form-floating">
@@ -69,6 +69,7 @@
                     }
                 </script>
                     <button class="w-100 btn btn-lg btn-success mt-4 mb-2 signup-btn" style="font-family:georgia" name="submit-signup" type="submit" >Sign up</button>
+                    <p class="mt-1 mb-0 text-muted" style="font-family:georgia;">Already have an account? <a href="index.php" style="text-decoration:none; color:green;">Log in</a></p>
             </form>
         </main>
     </body>
