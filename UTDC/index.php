@@ -1,38 +1,49 @@
+
 <?php
 	session_start();
-	$_SESSION['email'] = NULL;
-    $_SESSION['password'] = NULL;
-	$_SESSION['firstname' ] = NULL;
-    $_SESSION['lastname'] = NULL;
-    $_SESSION['dateofbirth'] = NULL;
+  if(isset($_POST['course-exit'])){
+    $sign=false;
+  }
+  else{
+    $sign=true;
+  }
+    require_once 'db/conn.php';
+    $b=$crud->getUser();
+    $f=0;
+    if(isset($_POST['submit'])){//if submit was clicked
+        $emailLogin=$_POST['email'];
+        $passwordLogin=$_POST['password'];
+        while($a = $b->fetch(PDO::FETCH_ASSOC)){
+            if($a['email'] == $emailLogin && $a['pass'] == $passwordLogin){
+                $_SESSION['email'] = $emailLogin;
+                $_SESSION['password'] = $passwordLogin;//if email and password exist we login and save the email and password in the session array
+                $_SESSION['firstname']=$a['firstname'];
+                $_SESSION['lastname']=$a['lastname'];
+                $_SESSION['dateofbirth']=$a['dateofbirth'];
+                $sign=false;
+                $f++;
+                break;//break with f>0
+            }
+                    
+            else{
+                $f=0;
+            }
+        }
+        if($f==0){//if wrong email or wrong password
 ?>
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Signin</title>
-		<meta name="theme-color" content="#7952b3">
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-		<link href="css/signin.css" rel="stylesheet">
-		<style>
-			.bg{
-				background-image: url('images/b2.jpg');
-				height: inherit;
-				background-repeat: no-repeat;
-				background-size: cover;
-				background-position: center;
-				top: 10px;
-			}
-		</style>
-	</head>
-	<?php
-		require_once "db/conn.php";
-		$issuccess = true;
-		$h=$crud->getUser();
+            <script type="text/javascript">
+                alert("Wrong Username or Password");
+                location="login.php";
+            </script>
+<?php
+
+        }
+    }
+    $issuccess = true;
 		if(isset($_POST['sign-out'])){
-			session_unset();
-            session_destroy();
+			$sign = true;
+		    session_unset();
+        	session_destroy();
 		}
 		if(isset($_POST['submit-signup'])){
 			$fname=$_POST['firstname'];
@@ -40,8 +51,8 @@
 			$dob=$_POST['dob'];
 			$email=$_POST['emaill'];
 			$password=$_POST['pass'];
-			while($c = $h->fetch(PDO::FETCH_ASSOC)){
-				if($c['firstname'] == $fname && $c['lastname'] == $lname || $c['email'] == $email){
+			while($c = $b->fetch(PDO::FETCH_ASSOC)){
+				if($c['email'] == $email){
 					$issuccess = false;
 					break;
 				}
@@ -68,34 +79,175 @@
 					<?php
 				}
 				else{
-					?>
-					<script>
-						alert("Sign up successful");
-						location="home.php";
-					</script>
+							$_SESSION['email'] = $email;
+							$_SESSION['password'] = $password;//if email and password exist we login and save the email and password in the session array
+							$_SESSION['firstname']=$fname;
+							$_SESSION['lastname']=$lname;
+							$_SESSION['dateofbirth']=$dob;
+							$sign = false;
+						?>
 					<?php
 				}
 			}
 		}
+
+    //else if everything works then we excute the following code
+    require_once 'includes/header.php';
+    
+?>
+  <div id="home"></div>
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" >
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><img src="images/book1.jpg" alt="image1" width="100%" height="100%"></svg>
+
+        <div class="container">
+          <div class="carousel-caption text-start">
+            <h1>Example headline.</h1>
+            <p>Some representative placeholder content for the first slide of the carousel.</p>
+            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Another example headline.</h1>
+            <p>Some representative placeholder content for the second slide of the carousel.</p>
+            <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+
+        <div class="container">
+          <div class="carousel-caption text-end">
+            <h1>One more for good measure.</h1>
+            <p>Some representative placeholder content for the third slide of this carousel.</p>
+            <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  
+
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+
+  <div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+
+        <h2>Heading</h2>
+        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <?php if($sign==true){?>
+        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <?php } 
+        else{
+          ?>
+          <p><a class="btn btn-secondary" href="aboutus.php">more details &raquo;</a></p>
+          <?php
+        }
+        ?>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+
+        <h2>Heading</h2>
+        <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
+        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+
+        <h2>Heading</h2>
+        <p>And lastly this, the third column of representative placeholder content.</p>
+        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+    <div id="about"></div>
+
+    <!-- START THE FEATURETTES -->
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
+        <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
+      </div>
+      <div class="col-md-5">
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading">Oh yeah, it’s that good. <span class="text-muted">See for yourself.</span></h2>
+        <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p>
+      </div>
+      <div class="col-md-5 order-md-1">
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+        <p class="lead">And yes, this is the last block of representative placeholder content. Again, not really intended to be actually read, simply here to give you a better view of what this would look like with some actual content. Your content.</p>
+      </div>
+      <div class="col-md-5">
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title></svg>
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- /END THE FEATURETTES -->
+
+  </div><!-- /.container -->
+
+
+  <!-- FOOTER -->
+  <footer class="container">
+    <p class="float-end"><a href="#">Back to top</a></p>
+    <p>&copy; 2017–2021 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+	<?php
+		if($sign==false){
+			echo $_SESSION['email'];
+		}
 	?>
-	<body  class="text-center bg">
-		<main class="form-signin">
-		
-			<form action="home.php" method="post"  >
-				<img class="mb-4" src="images/logo1.png" alt="" width="270" height="200">
-				
-				<div class="form-floating">
-					<input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
-					<label for="email" class="text-muted" style="font-family:georgia;">Email address</label>
-			    </div>
-				<div class="form-floating">
-					<input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-					<label for="password" class="text-muted" style="font-family:georgia ;">Password</label>
-				</div>
-					<button class="w-100 btn btn-lg btn-success mt-1 mb-2" style="font-family:georgia" name="submit" type="submit">Sign in</button>
-					<p class="mt-3 mb-3 text-muted" style="font-family:georgia;">Don't have an account? <a href="signup.php" style="text-decoration:none; color:green;">Sign up</a></p>
-			</form>
-		</main>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	</body>
-</html>
+  </footer>
+</main>
+<?php
+    require_once 'includes/footer.php';
+?>

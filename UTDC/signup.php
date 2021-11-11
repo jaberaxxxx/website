@@ -69,7 +69,7 @@
                     }
                 </script>
                     <button class="w-100 btn btn-lg btn-success mt-4 mb-2 signup-btn" style="font-family:georgia" name="submit-signup" type="submit" >Sign up</button>
-                    <p class="mt-1 mb-0 text-muted" style="font-family:georgia;">Already have an account? <a href="index.php" style="text-decoration:none; color:green;">Log in</a></p>
+                    <p class="mt-1 mb-0 text-muted" style="font-family:georgia;">Already have an account? <a href="login.php" style="text-decoration:none; color:green;">Log in</a></p>
             </form>
         </main>
     </body>
